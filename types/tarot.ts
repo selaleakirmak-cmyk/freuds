@@ -87,6 +87,7 @@ export type InterpretationBlock = {
 export type ReadingPhase =
   | "setup"
   | "drawing"
+  | "shuffling"
   | "dealing"
   | "ready_to_reveal"
   | "revealing"
