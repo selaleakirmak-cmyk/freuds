@@ -17,9 +17,11 @@ export default function ReadingSetupPage() {
     notFound();
   }
 
+  const activeSpread = spread;
+
   function handleBegin() {
-    const reading = createReading(spread, cards, intention);
-    const initialState = createInitialSessionState(spread.id, intention);
+    const reading = createReading(activeSpread, cards, intention);
+    const initialState = createInitialSessionState(activeSpread.id, intention);
 
     saveReadingSession({
       ...initialState,
@@ -27,15 +29,15 @@ export default function ReadingSetupPage() {
       reading,
     });
 
-    router.push('/reading/' + spread.slug + '/session');
+    router.push('/reading/' + activeSpread.slug + '/session');
   }
 
   return (
     <div className="mx-auto max-w-3xl px-6 pb-20 pt-32 md:px-8">
       <div className="rounded-[32px] border border-black/8 bg-[#F4EFE4] px-6 py-8 md:px-10 md:py-12">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">{spread.estimatedTime ?? 'Reading'}</p>
-        <h1 className="mt-4 font-serif text-[42px] leading-[1.02] text-[#161310] md:text-[56px]">{spread.title}</h1>
-        <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-black/58">{spread.description}</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">{activeSpread.estimatedTime ?? 'Reading'}</p>
+        <h1 className="mt-4 font-serif text-[42px] leading-[1.02] text-[#161310] md:text-[56px]">{activeSpread.title}</h1>
+        <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-black/58">{activeSpread.description}</p>
 
         <div className="mt-10 border-t border-black/8 pt-8">
           <label htmlFor="intention" className="block font-mono text-[11px] uppercase tracking-[0.18em] text-black/40">Intention</label>
@@ -53,7 +55,7 @@ export default function ReadingSetupPage() {
         <div className="mt-10 flex flex-col gap-4 border-t border-black/8 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">Structure</p>
-            <p className="mt-2 text-[14px] leading-[1.7] text-black/55">{spread.cardCount} kart acilacak.</p>
+            <p className="mt-2 text-[14px] leading-[1.7] text-black/55">{activeSpread.cardCount} kart acilacak.</p>
           </div>
           <button type="button" onClick={handleBegin} className="inline-flex items-center justify-center rounded-full border border-[#161310] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#161310] transition hover:bg-[#161310] hover:text-[#F4EFE4]">Begin reading</button>
         </div>
