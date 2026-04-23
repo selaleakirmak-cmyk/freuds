@@ -32,6 +32,9 @@ export default function ReadingSessionPage() {
   const t = getMessages(locale);
   const spread = useMemo(() => spreads.find((item) => item.slug === params.spreadId), [params.spreadId]);
   const [session, setSession] = useState<ReadingSessionState | null>(null);
+  const [wholeSpreadText, setWholeSpreadText] = useState<string>("");
+  const [isGeneratingWholeSpread, setIsGeneratingWholeSpread] = useState(false);
+  const [wholeSpreadError, setWholeSpreadError] = useState<string>("");
 
   useEffect(() => {
     if (!spread) return;
@@ -108,6 +111,45 @@ export default function ReadingSessionPage() {
     saveReadingSession(nextState);
   }
 
+  async function handleWholeSpreadReading() {
+    setIsGeneratingWholeSpread(true);
+    setWholeSpreadError("");
+
+    try {
+      const response = await fetch("/api/whole-spread", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          locale,
+          spreadTitle: spread.title,
+          spreadDescription: spread.description,
+          intention: resolved.intention || "",
+          cards: resolved.cards.map((item) => ({
+            positionLabel: item.position.label,
+            positionMeaning: item.position.meaning,
+            cardTitle: item.card.title,
+            cardSummary: item.card.summary,
+            cardMeaning: item.card.meaning,
+          })),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed");
+      }
+
+      setWholeSpreadText(data.text || "");
+    } catch {
+      setWholeSpreadError(t.reading.wholeSpreadError);
+    } finally {
+      setIsGeneratingWholeSpread(false);
+    }
+  }
+
   const statusLabel =
     currentSession.phase === "shuffling"
       ? t.reading.shuffling
@@ -162,14 +204,42 @@ export default function ReadingSessionPage() {
           </section>
         </div>
       )}
+
       {currentSession.phase === "complete" ? (
-        <div className="mt-10 flex flex-wrap gap-6">
-          <button type="button" onClick={() => router.push(`/${locale}/spreads`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
-            {t.reading.returnToSpreads}
-          </button>
-          <button type="button" onClick={() => router.push(`/${locale}/reading/${spread.slug}`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
-            {t.reading.startNew}
-          </button>
+        <div className="mt-10 space-y-8">
+          <div className="rounded-[28px] border border-black/8 bg-[#F4EFE4] p-6 md:p-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{t.reading.wholeSpreadTitle}</p>
+            <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-black/55">{t.reading.wholeSpreadPrompt}</p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <button
+                type="button"
+                onClick={handleWholeSpreadReading}
+                disabled={isGeneratingWholeSpread}
+                className="inline-flex items-center justify-center rounded-full border border-[#161310] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#161310] transition hover:bg-[#161310] hover:text-[#F4EFE4] disabled:cursor-wait disabled:opacity-60"
+              >
+                {isGeneratingWholeSpread ? t.reading.generatingWholeSpread : t.reading.readWholeSpread}
+              </button>
+            </div>
+            {wholeSpreadError ? (
+              <p className="mt-4 text-[14px] leading-[1.7] text-black/50">{wholeSpreadError}</p>
+            ) : null}
+            {wholeSpreadText ? (
+              <div className="mt-6 border-t border-black/8 pt-6">
+                <div className="prose prose-neutral max-w-none whitespace-pre-line text-[15px] leading-[1.9] text-black/72">
+                  {wholeSpreadText}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="flex flex-wrap gap-6">
+            <button type="button" onClick={() => router.push(`/${locale}/spreads`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
+              {t.reading.returnToSpreads}
+            </button>
+            <button type="button" onClick={() => router.push(`/${locale}/reading/${spread.slug}`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
+              {t.reading.startNew}
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
