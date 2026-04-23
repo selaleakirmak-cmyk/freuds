@@ -2,6 +2,19 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { cards } from "@/lib/data/cards";
 
+function PlaceholderCard() {
+  return (
+    <div className="mb-8 aspect-[2/3] overflow-hidden rounded-[24px] border border-black/8 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(180deg,#ece5d8,#e4dccd)] p-6 shadow-[0_18px_50px_rgba(0,0,0,0.06)]">
+      <div className="flex h-full items-center justify-center rounded-[18px] border border-black/8">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-black/10">
+          <div className="absolute h-12 w-12 rounded-full border border-black/10" />
+          <div className="h-16 w-px bg-black/20" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function CardPage({ params }: { params: Promise<{ cardId: string }> }) {
   const { cardId } = await params;
   const card = cards.find((c) => c.slug === cardId);
@@ -16,9 +29,7 @@ export default async function CardPage({ params }: { params: Promise<{ cardId: s
 
       <div className="mt-10 grid gap-16 md:grid-cols-2">
         <div>
-          <div className="mb-8 flex aspect-[2/3] items-center justify-center bg-[#161310]">
-            <div className="h-20 w-px bg-[#F4EFE4]/20" />
-          </div>
+          <PlaceholderCard />
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{card.category}</p>
           <h1 className="mt-2 font-serif text-[40px] text-[#161310]">{card.title}</h1>
           <div className="mt-6 flex flex-wrap gap-3">
