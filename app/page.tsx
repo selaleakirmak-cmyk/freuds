@@ -1,9 +1,28 @@
 import Link from "next/link";
 
+function HeroCard({ label, title }: { label: string; title: string }) {
+  return (
+    <div className="rounded-[22px] border border-black/8 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(180deg,#ece5d8,#e4dccd)] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.06)]">
+      <div className="aspect-[2/3] rounded-[16px] border border-black/8 p-4">
+        <div className="flex h-full flex-col">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9B8B6E]">{label}</p>
+          <div className="flex flex-1 items-center justify-center">
+            <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-black/10">
+              <div className="absolute h-8 w-8 rounded-full border border-black/10" />
+              <div className="h-10 w-px bg-black/20" />
+            </div>
+          </div>
+          <h3 className="font-serif text-[22px] leading-[1.05] text-[#161310]">{title}</h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8">
-      <section className="grid gap-12 border-b border-black/6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_360px] lg:items-end">
+      <section className="grid gap-12 border-b border-black/6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-end">
         <div>
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">
             A structured reflection tool
@@ -26,22 +45,28 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">How it works</p>
-          <ol className="mt-6 space-y-6">
-            <li>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">01</p>
-              <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Choose a spread that matches the scale of your question.</p>
-            </li>
-            <li>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">02</p>
-              <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Write an intention or leave the field open.</p>
-            </li>
-            <li>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">03</p>
-              <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Reveal cards one by one and read the spread slowly.</p>
-            </li>
-          </ol>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid grid-cols-2 gap-4">
+            <HeroCard label="Major" title="Semptom" />
+            <HeroCard label="Relation" title="Aktarım" />
+          </div>
+          <div className="rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">How it works</p>
+            <ol className="mt-6 space-y-6">
+              <li>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">01</p>
+                <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Choose a spread that matches the scale of your question.</p>
+              </li>
+              <li>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">02</p>
+                <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Write an intention or leave the field open.</p>
+              </li>
+              <li>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/30">03</p>
+                <p className="mt-2 text-[15px] leading-[1.75] text-black/62">Reveal cards one by one and read the spread slowly.</p>
+              </li>
+            </ol>
+          </div>
         </div>
       </section>
 
