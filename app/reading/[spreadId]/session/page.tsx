@@ -40,23 +40,23 @@ export default function ReadingSessionPage() {
     return <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">Loading session</p></div>;
   }
 
-  const reading = session.reading;
+  const currentSession: ReadingSessionState = session;
+  const reading = currentSession.reading;
   const resolved = resolveReading(reading, spread, deck);
   const nextRevealPositionId = getNextUnrevealedPositionId(reading);
   const activeCard: ResolvedReadingCard | null =
-    resolved.cards.find((item) => item.position.id === session.activePositionId) ??
-    resolved.cards.find((item) => item.position.id === session.lastRevealedPositionId) ??
+    resolved.cards.find((item) => item.position.id === currentSession.activePositionId) ??
+    resolved.cards.find((item) => item.position.id === currentSession.lastRevealedPositionId) ??
     null;
   const interpretation: InterpretationBlock | null = activeCard ? buildInterpretationBlock(activeCard.position, activeCard.card) : null;
 
   function handleReveal(positionId: string) {
-    if (session === null || session.reading === null) return;
-    if (session.phase !== "ready_to_reveal" && session.phase !== "revealing") return;
+    if (currentSession.phase !== "ready_to_reveal" && currentSession.phase !== "revealing") return;
     if (nextRevealPositionId !== positionId) return;
-    const updatedReading = revealReadingCard(session.reading, positionId);
+    const updatedReading = revealReadingCard(reading, positionId);
     const completed = isReadingComplete(updatedReading);
     const nextState: ReadingSessionState = {
-      ...session,
+      ...currentSession,
       reading: updatedReading,
       activePositionId: positionId,
       lastRevealedPositionId: positionId,
@@ -67,20 +67,19 @@ export default function ReadingSessionPage() {
   }
 
   function handleSelect(positionId: string) {
-    if (session === null) return;
     const selected = resolved.cards.find((item) => item.position.id === positionId && item.revealed);
     if (!selected) return;
-    const nextState: ReadingSessionState = { ...session, activePositionId: positionId };
+    const nextState: ReadingSessionState = { ...currentSession, activePositionId: positionId };
     setSession(nextState);
     saveReadingSession(nextState);
   }
 
   const statusLabel =
-    session.phase === "ready_to_reveal"
+    currentSession.phase === "ready_to_reveal"
       ? "Ready to begin"
-      : session.phase === "revealing"
+      : currentSession.phase === "revealing"
       ? nextRevealPositionId ? "Reading in progress" : "Sit with the spread"
-      : session.phase === "complete"
+      : currentSession.phase === "complete"
       ? "Reading complete"
       : "Preparing";
 
@@ -100,8 +99,8 @@ export default function ReadingSessionPage() {
           <ReadingBoard
             spread={spread}
             cards={resolved.cards}
-            phase={session.phase}
-            activePositionId={session.activePositionId}
+            phase={currentSession.phase}
+            activePositionId={currentSession.activePositionId}
             nextRevealPositionId={nextRevealPositionId}
             onReveal={handleReveal}
             onSelect={handleSelect}
