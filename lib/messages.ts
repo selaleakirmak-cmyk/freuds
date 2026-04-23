@@ -1,0 +1,88 @@
+import type { Locale } from "@/lib/i18n";
+
+export const messages = {
+  tr: {
+    nav: {
+      spreads: "Açılımlar",
+      deck: "Deste",
+      switchLabel: "EN",
+    },
+    footer: {
+      line1: "Düşünme aracı, fal değil.",
+      line2: "Freudstarot sembolik bir düşünme aracıdır. Terapi ya da tanı aracı değildir.",
+    },
+    home: {
+      eyebrow: "Yapılandırılmış bir düşünme aracı",
+      heroLine1: "Fal değil.",
+      heroLine2: "Hâlihazırda hareket halinde olan şeyi daha yavaş okumanın bir yolu.",
+      body: "Freudstarot, psikanalitik esinli bir kart arayüzüdür. Bir açılım seçersin, kartları tek tek açarsın ve onları pozisyon, anlam ve gerilim üzerinden okursun. Mesele kesinlik değildir. Mesele dikkattir.",
+      primaryCta: "Açılıma başla",
+      secondaryCta: "Desteye bak",
+      howTitle: "Nasıl işler",
+      step1: "Sorunun ölçeğine uygun bir açılım seç.",
+      step2: "Bir niyet yaz ya da alanı açık bırak.",
+      step3: "Kartları tek tek aç ve açılımı yavaşça oku.",
+      methodEyebrow: "Yöntem",
+      methodTitle1: "Kartlar seni açıklamaz.",
+      methodTitle2: "Bakmanın yapısını kurar.",
+      methodBody: "Freudstarot öngörmek, teşhis koymak ya da çözmek için değil; getirdiğin soruyla sembolik malzeme arasında bileşik bir karşılaşma kurmak için vardır. Açılım pozisyonları soruyu çerçeveler. Kartlar bir tema getirir. Anlam ilişkide oluşur.",
+      toneEyebrow: "Ton",
+      tone1Title: "Mistik değil",
+      tone1Body: "Arayüz sembolik kalır ama okült ya da teatral olmaz.",
+      tone2Title: "Oyunlaştırılmış değil",
+      tone2Body: "Kartlar hızlı tüketilen etkileşimler olarak değil, dikkatli biçimde açılır.",
+      tone3Title: "Terapinin yerine geçmez",
+      tone3Body: "Bu araç düşünmeye eşlik edebilir ama tedavi ya da süpervizyonun yerine geçmez.",
+      beginEyebrow: "Başlangıç",
+      beginTitle: "Basit bir açılımla başla.",
+      beginBody: "Çoğu zaman tek kart yeterlidir. Güçlü bir okuma çok karttan değil; hassasiyet, tempo ve sorunun taşıyabileceği şeyden doğar.",
+      beginLink: "Açılımlara git",
+      cardLabelMajor: "Majör",
+      cardLabelRelation: "İlişki",
+    },
+  },
+  en: {
+    nav: {
+      spreads: "Spreads",
+      deck: "Deck",
+      switchLabel: "TR",
+    },
+    footer: {
+      line1: "Reflection, not prediction.",
+      line2: "Freudstarot is a symbolic reflection tool. It is not therapy and not a diagnostic instrument.",
+    },
+    home: {
+      eyebrow: "A structured reflection tool",
+      heroLine1: "Not fortune-telling.",
+      heroLine2: "A slower way of reading what is already in motion.",
+      body: "Freudstarot is a psychoanalytically-inspired card interface for reflection. You choose a spread, reveal cards one by one, and read them through position, meaning, and tension. The point is not certainty. The point is attention.",
+      primaryCta: "Begin a reading",
+      secondaryCta: "Browse the deck",
+      howTitle: "How it works",
+      step1: "Choose a spread that matches the scale of your question.",
+      step2: "Write an intention or leave the field open.",
+      step3: "Reveal cards one by one and read the spread slowly.",
+      methodEyebrow: "Method",
+      methodTitle1: "Cards do not explain you.",
+      methodTitle2: "They structure a way of looking.",
+      methodBody: "Freudstarot does not aim to predict, diagnose, or resolve. It offers a composed encounter between symbolic material and the question you bring. Spread positions frame the inquiry. Cards introduce a theme. Meaning emerges in relation.",
+      toneEyebrow: "Tone",
+      tone1Title: "Not mystical",
+      tone1Body: "The interface stays symbolic without becoming occult or theatrical.",
+      tone2Title: "Not gamified",
+      tone2Body: "Cards are revealed deliberately, not consumed as fast interaction.",
+      tone3Title: "Not therapeutic substitution",
+      tone3Body: "The tool may support reflection, but it does not replace treatment or supervision.",
+      beginEyebrow: "Begin",
+      beginTitle: "Start with a simple spread.",
+      beginBody: "A single-card reading is often enough. A strong reading does not depend on many cards. It depends on precision, pacing, and what the question can bear.",
+      beginLink: "Go to spreads",
+      cardLabelMajor: "Major",
+      cardLabelRelation: "Relation",
+    },
+  },
+} satisfies Record<Locale, Record<string, unknown>>;
+
+export function getMessages(locale: Locale) {
+  return messages[locale];
+}
