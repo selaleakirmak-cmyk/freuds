@@ -6,6 +6,7 @@ import { cards as deck } from "@/lib/data/cards";
 import { spreads } from "@/lib/data/spreads";
 import ReadingBoard from "@/components/tarot/ReadingBoard";
 import InterpretationPanel from "@/components/tarot/InterpretationPanel";
+import ShuffleDeckScene from "@/components/tarot/ShuffleDeckScene";
 import {
   buildInterpretationBlock,
   getNextUnrevealedPositionId,
@@ -39,9 +40,33 @@ export default function ReadingSessionPage() {
       router.replace(`/${locale}/reading/${params.spreadId}`);
       return;
     }
-    const next: ReadingSessionState = { ...stored, phase: "ready_to_reveal" };
-    setSession(next);
-    saveReadingSession(next);
+
+    const shufflingState: ReadingSessionState = { ...stored, phase: "shuffling" };
+    setSession(shufflingState);
+    saveReadingSession(shufflingState);
+
+    const shuffleTimer = window.setTimeout(() => {
+      setSession((prev) => {
+        if (!prev) return prev;
+        const next = { ...prev, phase: "dealing" as const };
+        saveReadingSession(next);
+        return next;
+      });
+    }, 1200);
+
+    const dealingTimer = window.setTimeout(() => {
+      setSession((prev) => {
+        if (!prev) return prev;
+        const next = { ...prev, phase: "ready_to_reveal" as const };
+        saveReadingSession(next);
+        return next;
+      });
+    }, 2150);
+
+    return () => {
+      window.clearTimeout(shuffleTimer);
+      window.clearTimeout(dealingTimer);
+    };
   }, [locale, params.spreadId, router, spread]);
 
   if (!spread) notFound();
@@ -84,7 +109,9 @@ export default function ReadingSessionPage() {
   }
 
   const statusLabel =
-    currentSession.phase === "ready_to_reveal"
+    currentSession.phase === "shuffling"
+      ? t.reading.shuffling
+      : currentSession.phase === "ready_to_reveal"
       ? t.reading.ready
       : currentSession.phase === "revealing"
       ? nextRevealPositionId ? t.reading.inProgress : t.reading.sitWithSpread
@@ -108,22 +135,33 @@ export default function ReadingSessionPage() {
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/40">{statusLabel}</p>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
-        <section>
-          <ReadingBoard
-            spread={spread}
-            cards={resolved.cards}
-            phase={currentSession.phase}
-            activePositionId={currentSession.activePositionId}
-            nextRevealPositionId={nextRevealPositionId}
-            onReveal={handleReveal}
-            onSelect={handleSelect}
-          />
-        </section>
-        <section>
-          <InterpretationPanel activeCard={activeCard} interpretation={interpretation} />
-        </section>
-      </div>
+      {currentSession.phase === "shuffling" ? (
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+          <section>
+            <ShuffleDeckScene label={t.reading.shuffleDeck} />
+          </section>
+          <section>
+            <InterpretationPanel activeCard={null} interpretation={null} />
+          </section>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+          <section>
+            <ReadingBoard
+              spread={spread}
+              cards={resolved.cards}
+              phase={currentSession.phase}
+              activePositionId={currentSession.activePositionId}
+              nextRevealPositionId={nextRevealPositionId}
+              onReveal={handleReveal}
+              onSelect={handleSelect}
+            />
+          </section>
+          <section>
+            <InterpretationPanel activeCard={activeCard} interpretation={interpretation} />
+          </section>
+        </div>
+      )}
       {currentSession.phase === "complete" ? (
         <div className="mt-10 flex flex-wrap gap-6">
           <button type="button" onClick={() => router.push(`/${locale}/spreads`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
