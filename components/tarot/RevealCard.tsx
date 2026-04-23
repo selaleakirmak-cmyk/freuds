@@ -48,7 +48,13 @@ function CardFace({ card }: { card: Card }) {
   return (
     <div className="relative flex h-full w-full flex-col p-4 md:p-5">
       <div className="relative flex-1 overflow-hidden rounded-[12px] border border-black/8 bg-[#ece5d8]">
-        <Image src={card.image} alt={card.title} fill sizes="(max-width: 768px) 150px, 190px" className="object-cover" />
+        <Image
+          src={card.image}
+          alt={card.title}
+          fill
+          sizes="(max-width: 768px) 150px, 190px"
+          className="object-cover"
+        />
       </div>
       <div className="mt-4">
         <h3 className="font-serif text-[22px] leading-[1.05] text-[#161310]">{card.title}</h3>
