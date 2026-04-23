@@ -3,19 +3,7 @@ import { notFound } from "next/navigation";
 import { cards } from "@/lib/data/cards";
 import { isValidLocale } from "@/lib/i18n";
 import { getMessages } from "@/lib/messages";
-
-function PlaceholderThumb() {
-  return (
-    <div className="mb-4 aspect-[2/3] overflow-hidden rounded-[18px] border border-black/8 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(180deg,#ece5d8,#e4dccd)] p-4">
-      <div className="flex h-full items-center justify-center rounded-[12px] border border-black/8">
-        <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-black/10">
-          <div className="absolute h-7 w-7 rounded-full border border-black/10" />
-          <div className="h-10 w-px bg-black/20" />
-        </div>
-      </div>
-    </div>
-  );
-}
+import CardArtwork from "@/components/tarot/CardArtwork";
 
 export default async function DeckPage({
   params,
@@ -44,7 +32,7 @@ export default async function DeckPage({
           <div className="grid grid-cols-2 gap-px border border-black/8 bg-black/8 sm:grid-cols-3 md:grid-cols-4">
             {cards.filter((card) => card.category === category).map((card) => (
               <Link key={card.id} href={`/${locale}/deck/${card.slug}`} className="group bg-[#F4EFE4] p-4 transition-colors duration-300 hover:bg-[#161310] md:p-5">
-                <PlaceholderThumb />
+                <CardArtwork src={card.image} alt={card.title} variant="thumb" />
                 <h3 className="font-serif text-[20px] text-[#161310] group-hover:text-[#F4EFE4]">{card.title}</h3>
                 <p className="mt-2 text-[13px] text-black/45 group-hover:text-[#F4EFE4]/60">{card.summary}</p>
               </Link>
