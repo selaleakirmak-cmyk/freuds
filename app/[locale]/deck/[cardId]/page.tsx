@@ -3,19 +3,7 @@ import Link from "next/link";
 import { cards } from "@/lib/data/cards";
 import { isValidLocale } from "@/lib/i18n";
 import { getMessages } from "@/lib/messages";
-
-function PlaceholderCard() {
-  return (
-    <div className="mb-8 aspect-[2/3] overflow-hidden rounded-[24px] border border-black/8 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(180deg,#ece5d8,#e4dccd)] p-6 shadow-[0_18px_50px_rgba(0,0,0,0.06)]">
-      <div className="flex h-full items-center justify-center rounded-[18px] border border-black/8">
-        <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-black/10">
-          <div className="absolute h-12 w-12 rounded-full border border-black/10" />
-          <div className="h-16 w-px bg-black/20" />
-        </div>
-      </div>
-    </div>
-  );
-}
+import CardArtwork from "@/components/tarot/CardArtwork";
 
 export default async function CardPage({
   params,
@@ -41,7 +29,7 @@ export default async function CardPage({
 
       <div className="mt-10 grid gap-16 md:grid-cols-2">
         <div>
-          <PlaceholderCard />
+          <CardArtwork src={card.image} alt={card.title} variant="large" />
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{card.category}</p>
           <h1 className="mt-2 font-serif text-[40px] text-[#161310]">{card.title}</h1>
           <div className="mt-6 flex flex-wrap gap-3">
