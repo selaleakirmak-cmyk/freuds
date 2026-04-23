@@ -17,6 +17,10 @@ export default function ReadingBoard({ spread, cards, phase, activePositionId, n
   const boardUsesCoordinates =
     spread.positions.every((position) => typeof position.x === "number" && typeof position.y === "number") && cards.length > 1;
 
+  const usesMultiRowLayout = spread.positions.some((position) => typeof position.y === "number" && position.y !== 50);
+  const boardHeight = usesMultiRowLayout ? 640 : 480;
+  const boardMinHeightClass = usesMultiRowLayout ? "min-h-[700px]" : "min-h-[540px]";
+
   function canRevealCard(positionId: string, revealed: boolean) {
     if (revealed) return false;
     if (phase !== "ready_to_reveal" && phase !== "revealing") return false;
@@ -40,8 +44,8 @@ export default function ReadingBoard({ spread, cards, phase, activePositionId, n
     return (
       <div className="w-full">
         <div className="mb-5"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">{helperText}</p></div>
-        <div className="hidden min-h-[540px] rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6 md:block">
-          <div className="relative h-[480px] w-full">
+        <div className={`hidden rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6 md:block ${boardMinHeightClass}`}>
+          <div className="relative w-full" style={{ height: `${boardHeight}px` }}>
             {cards.map((item, index) => (
               <div key={item.position.id} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${item.position.x}%`, top: `${item.position.y}%` }}>
                 <div className="mb-3 text-center"><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/35">{item.position.label}</p></div>
