@@ -75,12 +75,13 @@ export default function ReadingSessionPage() {
     );
   }
 
-  const resolved = resolveReading(session.reading, spread, deck);
-  const nextRevealPositionId = getNextUnrevealedPositionId(session.reading);
+  const activeSession = session;
+  const resolved = resolveReading(activeSession.reading, spread, deck);
+  const nextRevealPositionId = getNextUnrevealedPositionId(activeSession.reading);
 
   const activeCard: ResolvedReadingCard | null =
-    resolved.cards.find((item) => item.position.id === session.activePositionId) ??
-    resolved.cards.find((item) => item.position.id === session.lastRevealedPositionId) ??
+    resolved.cards.find((item) => item.position.id === activeSession.activePositionId) ??
+    resolved.cards.find((item) => item.position.id === activeSession.lastRevealedPositionId) ??
     null;
 
   const interpretation: InterpretationBlock | null = activeCard
@@ -88,15 +89,14 @@ export default function ReadingSessionPage() {
     : null;
 
   function handleReveal(positionId: string) {
-    if (!session.reading) return;
-    if (session.phase !== "ready_to_reveal" && session.phase !== "revealing") return;
+    if (activeSession.phase !== "ready_to_reveal" && activeSession.phase !== "revealing") return;
     if (nextRevealPositionId !== positionId) return;
 
-    const updatedReading = revealReadingCard(session.reading, positionId);
+    const updatedReading = revealReadingCard(activeSession.reading, positionId);
     const completed = isReadingComplete(updatedReading);
 
     const nextState: ReadingSessionState = {
-      ...session,
+      ...activeSession,
       reading: updatedReading,
       activePositionId: positionId,
       lastRevealedPositionId: positionId,
@@ -111,25 +111,25 @@ export default function ReadingSessionPage() {
     const selected = resolved.cards.find((item) => item.position.id === positionId && item.revealed);
     if (!selected) return;
 
-    const nextState: ReadingSessionState = { ...session, activePositionId: positionId };
+    const nextState: ReadingSessionState = { ...activeSession, activePositionId: positionId };
     setSession(nextState);
     saveReadingSession(nextState);
   }
 
   const statusLabel =
-    session.phase === "drawing"
+    activeSession.phase === "drawing"
       ? "Preparing"
-      : session.phase === "dealing"
+      : activeSession.phase === "dealing"
       ? "Laying out the cards"
-      : session.phase === "ready_to_reveal"
+      : activeSession.phase === "ready_to_reveal"
       ? "Ready to begin"
-      : session.phase === "revealing"
+      : activeSession.phase === "revealing"
       ? nextRevealPositionId
         ? "Reading in progress"
         : "Sit with the spread"
       : "Reading complete";
 
-  const completionNote = session.phase === "complete" ? "Return to any revealed card." : null;
+  const completionNote = activeSession.phase === "complete" ? "Return to any revealed card." : null;
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8">
@@ -155,8 +155,8 @@ export default function ReadingSessionPage() {
           <ReadingBoard
             spread={spread}
             cards={resolved.cards}
-            phase={session.phase}
-            activePositionId={session.activePositionId}
+            phase={activeSession.phase}
+            activePositionId={activeSession.activePositionId}
             nextRevealPositionId={nextRevealPositionId}
             onReveal={handleReveal}
             onSelect={handleSelect}
@@ -168,7 +168,7 @@ export default function ReadingSessionPage() {
         </section>
       </div>
 
-      {session.phase === "complete" ? (
+      {activeSession.phase === "complete" ? (
         <div className="mt-10 flex flex-wrap gap-6">
           <button type="button" onClick={() => router.push('/spreads')} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
             Return to spreads
