@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Card, ReadingPhase, SpreadPosition } from "@/types/tarot";
 
@@ -19,6 +18,23 @@ type Props = {
 
 function canSelect(phase: ReadingPhase, revealed: boolean) {
   return revealed && (phase === "revealing" || phase === "complete");
+}
+
+function PlaceholderFace({ title, summary }: { title: string; summary: string }) {
+  return (
+    <div className="relative flex h-full w-full flex-col p-4 md:p-5">
+      <div className="flex items-center justify-center flex-1 rounded-[12px] border border-black/8 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),rgba(255,255,255,0)_55%),linear-gradient(180deg,#ece5d8,#e4dccd)]">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-black/10">
+          <div className="absolute h-10 w-10 rounded-full border border-black/10" />
+          <div className="h-16 w-px bg-black/20" />
+        </div>
+      </div>
+      <div className="mt-4">
+        <h3 className="font-serif text-[22px] leading-[1.05] text-[#161310]">{title}</h3>
+        <p className="mt-2 line-clamp-3 text-[13px] leading-[1.45] text-black/55">{summary}</p>
+      </div>
+    </div>
+  );
 }
 
 export default function RevealCard({ card, position, revealed, active, phase, index = 0, canReveal, isNext, onReveal, onSelect }: Props) {
@@ -60,13 +76,7 @@ export default function RevealCard({ card, position, revealed, active, phase, in
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9B8B6E]">{card.category}</p>
                 {typeof card.number === "number" ? <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/35">{String(card.number).padStart(2, "0")}</p> : null}
               </div>
-              <div className="relative mt-4 flex-1 overflow-hidden rounded-[12px] border border-black/8 bg-[#ECE5D8]">
-                {card.image ? <Image src={card.image} alt={card.title} fill sizes="(max-width: 768px) 150px, 190px" className="object-cover" /> : <div className="flex h-full items-center justify-center"><div className="h-16 w-px bg-black/15" /></div>}
-              </div>
-              <div className="mt-4">
-                <h3 className="font-serif text-[22px] leading-[1.05] text-[#161310]">{card.title}</h3>
-                <p className="mt-2 line-clamp-3 text-[13px] leading-[1.45] text-black/55">{card.summary}</p>
-              </div>
+              <PlaceholderFace title={card.title} summary={card.summary} />
             </div>
           </div>
         </motion.div>
