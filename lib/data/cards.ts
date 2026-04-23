@@ -7,7 +7,7 @@ export const cards: Card[] = [
     title: "Semptom",
     category: "major",
     number: 0,
-    image: "/cards/00-semptom.png",
+    image: "/cards/majors/major-00.png",
     keywords: ["uzlaşma", "dolaylı ifade", "çatışma", "ikame"],
     summary:
       "Görünürde anlamsız olan şey, bastırılmış bir çatışmanın dolaylı ifadesi olabilir.",
@@ -26,7 +26,7 @@ export const cards: Card[] = [
     title: "Bastırma",
     category: "major",
     number: 2,
-    image: "/cards/02-bastirma.png",
+    image: "/cards/majors/major-02.png",
     keywords: ["dışlama", "yasak", "geri itme", "bilinçdışı"],
     summary:
       "Bazı içerikler kaybolmaz; yalnızca bilinç alanından uzaklaştırılır.",
@@ -62,7 +62,7 @@ export const cards: Card[] = [
     slug: "repetition-compulsion",
     title: "Tekrar Zorlantısı",
     category: "major",
-    image: "/cards/repetition-compulsion.png",
+    image: "/cards/majors/major-10.png",
     keywords: ["tekrar", "döngü", "çözülmemişlik", "eyleme vurma"],
     summary: "Çözülemeyen şey bazen hatırlanmak yerine yeniden yaşanır.",
     meaning:
