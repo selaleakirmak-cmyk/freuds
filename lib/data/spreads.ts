@@ -70,40 +70,40 @@ export const spreads: Spread[] = [
         label: "Bilinçte Olan",
         meaning:
           "Şu anda tanımlayabildiğin, düşündüğün ya da sahip çıktığın katman burada görünür olur.",
-        x: 15,
-        y: 50,
+        x: 20,
+        y: 28,
       },
       {
         id: "repressed",
         label: "Bastırılan",
         meaning:
           "Bu pozisyon doğrudan düşünülmeyen, uzak tutulan ya da dolaylı yollarla geri dönen katmanı sorar.",
-        x: 33,
-        y: 50,
+        x: 50,
+        y: 28,
       },
       {
         id: "defense",
         label: "Savunma",
         meaning:
           "Burada mesele neyin doğru olduğu değil, psişenin kendini nasıl koruduğudur.",
-        x: 50,
-        y: 50,
+        x: 80,
+        y: 28,
       },
       {
         id: "repetition",
         label: "Tekrar Eden Örüntü",
         meaning:
           "Bu pozisyon çözülememiş olanın nasıl yeniden kurulduğunu ya da sahnelendiğini sorar.",
-        x: 67,
-        y: 50,
+        x: 35,
+        y: 74,
       },
       {
         id: "opening",
         label: "Çalışılabilir Açıklık",
         meaning:
           "Burada çözüm değil; işlenebilir, düşünülebilir ve taşınabilir yeni bir yön aranır.",
-        x: 85,
-        y: 50,
+        x: 65,
+        y: 74,
       },
     ],
   },
