@@ -80,6 +80,11 @@ export const messages = {
       revealFirst: "İlk kartı aç",
       revealNext: "Sıradaki kartı aç",
       returnToAny: "Herhangi bir açık karta dönebilirsin.",
+      wholeSpreadTitle: "Bütün olarak okuma",
+      wholeSpreadPrompt: "Tüm kartlar açıldığında, açılımı tek tek değil bir bütün olarak da okuyabilirsin.",
+      readWholeSpread: "Açılımın bütününü oku",
+      generatingWholeSpread: "Bütünsel okuma üretiliyor",
+      wholeSpreadError: "Bütünsel okuma şu anda üretilemedi.",
     },
   },
   en: {
@@ -161,6 +166,11 @@ export const messages = {
       revealFirst: "Reveal the first card",
       revealNext: "Reveal the next card",
       returnToAny: "Return to any revealed card.",
+      wholeSpreadTitle: "Whole spread reading",
+      wholeSpreadPrompt: "Once all cards are revealed, you can read the spread not only card by card but also as a whole.",
+      readWholeSpread: "Read the spread as a whole",
+      generatingWholeSpread: "Generating whole spread reading",
+      wholeSpreadError: "The whole spread reading could not be generated right now.",
     },
   },
 } as const;
