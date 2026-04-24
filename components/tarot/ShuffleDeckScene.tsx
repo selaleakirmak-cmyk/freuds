@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 type ShuffleDeckSceneProps = {
   label: string;
+  intro?: string;
 };
 
 function DeckCard({ className = "" }: { className?: string }) {
@@ -22,13 +23,12 @@ function DeckCard({ className = "" }: { className?: string }) {
   );
 }
 
-export default function ShuffleDeckScene({ label }: ShuffleDeckSceneProps) {
+export default function ShuffleDeckScene({ label, intro }: ShuffleDeckSceneProps) {
   return (
     <div className="rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6 md:p-8">
       <div className="mb-6 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">
-          {label}
-        </p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{label}</p>
+        {intro ? <p className="mx-auto mt-3 max-w-md text-[14px] leading-[1.75] text-black/52">{intro}</p> : null}
       </div>
 
       <div className="relative mx-auto h-[360px] max-w-[520px] overflow-hidden rounded-[24px] border border-black/6 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.28),rgba(255,255,255,0)_58%),linear-gradient(180deg,#efe8dc,#e8e0d2)]">
