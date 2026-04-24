@@ -34,22 +34,27 @@ export default async function LocalizedHomePage({
   }
 
   const t = getMessages(locale);
+  const welcomeTitle = locale === "tr" ? "Freudstarot’a hoş geldin." : "Welcome to Freudstarot.";
+  const welcomeBody =
+    locale === "tr"
+      ? "Burası kartlara bakmaktan çok, onlarla düşünmek için kuruldu. İstersen bir açılımla başlayabilir, istersen önce desteyi dolaşabilirsin."
+      : "This is a place built less for prediction than for reflection through cards. You can begin with a spread, or browse the deck first.";
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8">
       <section className="grid gap-12 border-b border-black/6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_420px] lg:items-end">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">
-            {t.home.eyebrow}
-          </p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">{t.home.eyebrow}</p>
           <h1 className="mt-5 max-w-4xl font-serif text-[54px] leading-[0.98] text-[#161310] md:text-[78px]">
             {t.home.heroLine1}
             <br />
             {t.home.heroLine2}
           </h1>
-          <p className="mt-8 max-w-2xl text-[17px] leading-[1.9] text-black/58">
-            {t.home.body}
-          </p>
+          <p className="mt-8 max-w-2xl text-[17px] leading-[1.9] text-black/58">{t.home.body}</p>
+          <div className="mt-8 max-w-2xl rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6">
+            <p className="font-serif text-[28px] leading-[1.08] text-[#161310]">{welcomeTitle}</p>
+            <p className="mt-3 text-[15px] leading-[1.85] text-black/58">{welcomeBody}</p>
+          </div>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link href={`/${locale}/spreads`} className="inline-flex items-center justify-center rounded-full border border-[#161310] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#161310] transition hover:bg-[#161310] hover:text-[#F4EFE4]">
               {t.home.primaryCta}
