@@ -26,6 +26,10 @@ export default function ReadingSetupPage() {
   }
 
   const currentSpread = spread;
+  const setupIntro =
+    locale === "tr"
+      ? "Bir soru, bir düğüm ya da yalnızca bir yön duygusu yeterli. Burada amaç kesin bir cevap değil, bakmanın biçimini kurmak."
+      : "A question, a knot, or even a faint sense of direction is enough. The aim here is not certainty, but a way of looking.";
 
   function handleBegin() {
     const reading = createReading(currentSpread, cards, intention);
@@ -46,6 +50,10 @@ export default function ReadingSetupPage() {
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#9B8B6E]">{currentSpread.estimatedTime ?? "Reading"}</p>
         <h1 className="mt-4 font-serif text-[42px] leading-[1.02] text-[#161310] md:text-[56px]">{currentSpread.title}</h1>
         <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-black/58">{currentSpread.description}</p>
+
+        <div className="mt-8 rounded-[24px] border border-black/8 bg-[#EEE7DB] p-5 md:p-6">
+          <p className="text-[15px] leading-[1.85] text-black/58">{setupIntro}</p>
+        </div>
 
         <div className="mt-10 border-t border-black/8 pt-8">
           <label htmlFor="intention" className="block font-mono text-[11px] uppercase tracking-[0.18em] text-black/40">{t.reading.setupEyebrow}</label>
