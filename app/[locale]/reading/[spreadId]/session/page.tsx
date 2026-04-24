@@ -16,6 +16,7 @@ import {
   revealReadingCard,
   saveReadingSession,
 } from "@/lib/reading-session";
+import { generateWholeSpreadSynthesis } from "@/lib/synthesis";
 import type { InterpretationBlock, ReadingSessionState, ResolvedReadingCard } from "@/types/tarot";
 import { getMessages } from "@/lib/messages";
 import { isValidLocale } from "@/lib/i18n";
@@ -32,9 +33,9 @@ export default function ReadingSessionPage() {
   const t = getMessages(locale);
   const spread = useMemo(() => spreads.find((item) => item.slug === params.spreadId), [params.spreadId]);
   const [session, setSession] = useState<ReadingSessionState | null>(null);
-  const [wholeSpreadText, setWholeSpreadText] = useState<string>("");
+  const [wholeSpreadText, setWholeSpreadText] = useState("");
   const [isGeneratingWholeSpread, setIsGeneratingWholeSpread] = useState(false);
-  const [wholeSpreadError, setWholeSpreadError] = useState<string>("");
+  const [wholeSpreadError, setWholeSpreadError] = useState("");
 
   useEffect(() => {
     if (!spread) return;
@@ -111,38 +112,24 @@ export default function ReadingSessionPage() {
     saveReadingSession(nextState);
   }
 
-  async function handleWholeSpreadReading() {
+  function handleWholeSpreadReading() {
     setIsGeneratingWholeSpread(true);
     setWholeSpreadError("");
 
     try {
-      const response = await fetch("/api/whole-spread", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          locale,
-          spreadTitle: spread.title,
-          spreadDescription: spread.description,
-          intention: resolved.intention || "",
-          cards: resolved.cards.map((item) => ({
-            positionLabel: item.position.label,
-            positionMeaning: item.position.meaning,
-            cardTitle: item.card.title,
-            cardSummary: item.card.summary,
-            cardMeaning: item.card.meaning,
-          })),
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Request failed");
-      }
-
-      setWholeSpreadText(data.text || "");
+      const synthesis = generateWholeSpreadSynthesis(locale, resolved);
+      const text = [
+        synthesis.title,
+        "",
+        synthesis.overview,
+        "",
+        locale === "tr" ? "Dikkat çeken eksenler" : "Notable tensions",
+        ...synthesis.notableAxes.map((item) => `• ${item}`),
+        "",
+        locale === "tr" ? "Düşünmeye açık sorular" : "Questions to stay with",
+        ...synthesis.reflectionQuestions.map((item) => `• ${item}`),
+      ].join("\n");
+      setWholeSpreadText(text);
     } catch {
       setWholeSpreadError(t.reading.wholeSpreadError);
     } finally {
@@ -220,14 +207,10 @@ export default function ReadingSessionPage() {
                 {isGeneratingWholeSpread ? t.reading.generatingWholeSpread : t.reading.readWholeSpread}
               </button>
             </div>
-            {wholeSpreadError ? (
-              <p className="mt-4 text-[14px] leading-[1.7] text-black/50">{wholeSpreadError}</p>
-            ) : null}
+            {wholeSpreadError ? <p className="mt-4 text-[14px] leading-[1.7] text-black/50">{wholeSpreadError}</p> : null}
             {wholeSpreadText ? (
               <div className="mt-6 border-t border-black/8 pt-6">
-                <div className="prose prose-neutral max-w-none whitespace-pre-line text-[15px] leading-[1.9] text-black/72">
-                  {wholeSpreadText}
-                </div>
+                <div className="prose prose-neutral max-w-none whitespace-pre-line text-[15px] leading-[1.9] text-black/72">{wholeSpreadText}</div>
               </div>
             ) : null}
           </div>
