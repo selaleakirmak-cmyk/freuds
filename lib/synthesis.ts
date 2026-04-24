@@ -55,7 +55,7 @@ function buildOverview(locale: Locale, reading: ResolvedReading, keywords: strin
   const intention = reading.intention?.trim();
   const first = reading.cards[0];
   const last = reading.cards[reading.cards.length - 1];
-  const recurring = keywords.length > 0 ? keywords.join(locale === "tr" ? ", " : ", ") : null;
+  const recurring = keywords.length > 0 ? keywords.join(", ") : null;
 
   if (locale === "tr") {
     const intentionLine = intention
@@ -140,7 +140,7 @@ function buildQuestions(locale: Locale, reading: ResolvedReading, keywords: stri
         : "Bu açılımın tekrar tekrar işaret ettiği ama doğrudan söylemediği şey ne olabilir?",
       first && last
         ? `${first.position.label} ile ${last.position.label.toLowerCase()} arasında nasıl bir iç hareket hissediyorsun?`
-        : "Bu açılım seni hangi yeni düşünme yönüne çağırıyor?`,"
+        : "Bu açılım seni hangi yeni düşünme yönüne çağırıyor?"
     ];
   }
 
