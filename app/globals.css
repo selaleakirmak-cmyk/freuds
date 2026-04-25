@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2ebdd;
+  --background: #f1e8dc;
+  --background-deep: #e4d7cf;
   --foreground: #171210;
-  --accent: #675060;
+  --foreground-soft: rgba(23, 18, 16, 0.76);
+  --foreground-muted: rgba(23, 18, 16, 0.58);
+  --accent: #5f4959;
+  --accent-soft: #8a7482;
   --accent-warm: #8a7159;
-  --border-soft: rgba(23, 18, 16, 0.09);
+  --border-soft: rgba(23, 18, 16, 0.12);
+  --border-strong: rgba(23, 18, 16, 0.18);
 }
 
 html {
@@ -14,7 +19,10 @@ html {
 }
 
 body {
-  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 40%), linear-gradient(180deg, #f5eee3 0%, #efe6d8 100%);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 38%),
+    radial-gradient(circle at 18% 10%, rgba(138, 116, 130, 0.08), rgba(138, 116, 130, 0) 28%),
+    linear-gradient(180deg, #f4ecdf 0%, #ede1d4 100%);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +30,7 @@ body {
 }
 
 ::selection {
-  background: rgba(103, 80, 96, 0.24);
+  background: rgba(95, 73, 89, 0.3);
   color: #f7f1e8;
 }
 
@@ -35,7 +43,7 @@ body {
   h6 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 400;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
   }
 
   p {
@@ -45,15 +53,23 @@ body {
 
 @layer utilities {
   .dream-surface {
-    background: linear-gradient(180deg, #e9dfd4, #ddd0c7);
+    background:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 56%),
+      linear-gradient(180deg, #e8ddd3, #dcccc4);
     border: 1px solid var(--border-soft);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.07);
   }
 
   .dream-panel {
-    background: rgba(244, 239, 228, 0.8);
+    background:
+      linear-gradient(180deg, rgba(244, 239, 228, 0.86), rgba(239, 230, 216, 0.76));
     border: 1px solid var(--border-soft);
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px);
+  }
+
+  .ink-panel {
+    background: linear-gradient(180deg, #1a1518, #151113);
+    color: #f4ede4;
   }
 }
