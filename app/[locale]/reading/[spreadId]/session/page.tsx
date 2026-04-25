@@ -75,7 +75,7 @@ export default function ReadingSessionPage() {
 
   if (!spread) notFound();
   if (session === null || session.reading === null) {
-    return <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">{t.reading.loading}</p></div>;
+    return <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 md:px-8 md:pb-20 md:pt-32"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/52">{t.reading.loading}</p></div>;
   }
 
   const currentSession: ReadingSessionState = session;
@@ -149,32 +149,32 @@ export default function ReadingSessionPage() {
       : t.reading.loading;
 
   return (
-    <div className="mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-8">
-      <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 md:px-8 md:pb-20 md:pt-32">
+      <div className="mb-7 flex flex-col gap-4 md:mb-10 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{t.reading.sessionEyebrow}</p>
-          <h1 className="mt-3 font-serif text-[38px] leading-[1.02] text-[#161310] md:text-[50px]">{spread.title}</h1>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#5F4959] md:text-[11px]">{t.reading.sessionEyebrow}</p>
+          <h1 className="mt-3 font-serif text-[34px] leading-[1.02] text-[#171210] md:text-[50px]">{spread.title}</h1>
           {resolved.intention ? (
-            <p className="mt-4 max-w-2xl text-[15px] italic leading-[1.75] text-black/52">{resolved.intention}</p>
+            <p className="mt-4 max-w-2xl text-[15px] italic leading-[1.75] text-black/68">{resolved.intention}</p>
           ) : (
-            <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-black/42">{t.reading.openField}</p>
+            <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-black/56">{t.reading.openField}</p>
           )}
         </div>
-        <div className="rounded-full border border-black/8 px-4 py-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/40">{statusLabel}</p>
+        <div className="w-fit rounded-full border border-black/14 px-4 py-3">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/56 md:text-[11px]">{statusLabel}</p>
         </div>
       </div>
       {currentSession.phase === "shuffling" ? (
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid grid-cols-1 gap-5 md:gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
           <section>
-            <ShuffleDeckScene label={t.reading.shuffleDeck} />
+            <ShuffleDeckScene label={t.reading.shuffleDeck} intro={locale === "tr" ? "Deste karıştırılıyor. Açılım birazdan biçim kazanacak." : "The deck is being shuffled. The spread is about to take form."} />
           </section>
           <section>
             <InterpretationPanel activeCard={null} interpretation={null} />
           </section>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid grid-cols-1 gap-5 md:gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
           <section>
             <ReadingBoard
               spread={spread}
@@ -193,33 +193,33 @@ export default function ReadingSessionPage() {
       )}
 
       {currentSession.phase === "complete" ? (
-        <div className="mt-10 space-y-8">
-          <div className="rounded-[28px] border border-black/8 bg-[#F4EFE4] p-6 md:p-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E]">{t.reading.wholeSpreadTitle}</p>
-            <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-black/55">{t.reading.wholeSpreadPrompt}</p>
-            <div className="mt-6 flex flex-wrap gap-4">
+        <div className="mt-8 space-y-6 md:mt-10 md:space-y-8">
+          <div className="dream-panel rounded-[24px] p-5 md:rounded-[28px] md:p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#5F4959] md:text-[11px]">{t.reading.wholeSpreadTitle}</p>
+            <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-black/66">{t.reading.wholeSpreadPrompt}</p>
+            <div className="mt-5 flex flex-wrap gap-4 md:mt-6">
               <button
                 type="button"
                 onClick={handleWholeSpreadReading}
                 disabled={isGeneratingWholeSpread}
-                className="inline-flex items-center justify-center rounded-full border border-[#161310] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#161310] transition hover:bg-[#161310] hover:text-[#F4EFE4] disabled:cursor-wait disabled:opacity-60"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#171210] bg-[#171210] px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#F4EFE4] transition hover:bg-[#5F4959] hover:border-[#5F4959] disabled:cursor-wait disabled:opacity-60 sm:w-auto"
               >
                 {isGeneratingWholeSpread ? t.reading.generatingWholeSpread : t.reading.readWholeSpread}
               </button>
             </div>
-            {wholeSpreadError ? <p className="mt-4 text-[14px] leading-[1.7] text-black/50">{wholeSpreadError}</p> : null}
+            {wholeSpreadError ? <p className="mt-4 text-[14px] leading-[1.7] text-black/60">{wholeSpreadError}</p> : null}
             {wholeSpreadText ? (
-              <div className="mt-6 border-t border-black/8 pt-6">
-                <div className="prose prose-neutral max-w-none whitespace-pre-line text-[15px] leading-[1.9] text-black/72">{wholeSpreadText}</div>
+              <div className="mt-6 border-t border-black/14 pt-6">
+                <div className="max-w-none whitespace-pre-line text-[15px] leading-[1.9] text-black/76">{wholeSpreadText}</div>
               </div>
             ) : null}
           </div>
 
-          <div className="flex flex-wrap gap-6">
-            <button type="button" onClick={() => router.push(`/${locale}/spreads`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
+          <div className="flex flex-wrap gap-5">
+            <button type="button" onClick={() => router.push(`/${locale}/spreads`)} className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#5F4959] hover:text-[#171210] md:text-[11px]">
               {t.reading.returnToSpreads}
             </button>
-            <button type="button" onClick={() => router.push(`/${locale}/reading/${spread.slug}`)} className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#9B8B6E] hover:text-[#161310]">
+            <button type="button" onClick={() => router.push(`/${locale}/reading/${spread.slug}`)} className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#5F4959] hover:text-[#171210] md:text-[11px]">
               {t.reading.startNew}
             </button>
           </div>
