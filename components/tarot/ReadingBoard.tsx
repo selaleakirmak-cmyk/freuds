@@ -43,12 +43,12 @@ export default function ReadingBoard({ spread, cards, phase, activePositionId, n
   if (boardUsesCoordinates) {
     return (
       <div className="w-full">
-        <div className="mb-5"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">{helperText}</p></div>
-        <div className={`hidden rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6 md:block ${boardMinHeightClass}`}>
+        <div className="mb-5"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/52">{helperText}</p></div>
+        <div className={`dream-surface hidden rounded-[28px] p-6 md:block ${boardMinHeightClass}`}>
           <div className="relative w-full" style={{ height: `${boardHeight}px` }}>
             {cards.map((item, index) => (
               <div key={item.position.id} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${item.position.x}%`, top: `${item.position.y}%` }}>
-                <div className="mb-3 text-center"><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/35">{item.position.label}</p></div>
+                <div className="mb-3 text-center"><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-black/52">{item.position.label}</p></div>
                 <RevealCard
                   card={item.card}
                   position={item.position}
@@ -68,7 +68,7 @@ export default function ReadingBoard({ spread, cards, phase, activePositionId, n
         <div className="space-y-8 md:hidden">
           {cards.map((item, index) => (
             <div key={item.position.id} className="flex flex-col items-center">
-              <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-black/35">{item.position.label}</p>
+              <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-black/52">{item.position.label}</p>
               <RevealCard
                 card={item.card}
                 position={item.position}
@@ -89,12 +89,12 @@ export default function ReadingBoard({ spread, cards, phase, activePositionId, n
   }
 
   return (
-    <div className="rounded-[28px] border border-black/8 bg-[#EEE7DB] p-6">
-      <div className="mb-5"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/35">{helperText}</p></div>
+    <div className="dream-surface rounded-[28px] p-6">
+      <div className="mb-5"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-black/52">{helperText}</p></div>
       <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center">
         {cards.map((item, index) => (
           <div key={item.position.id} className="flex flex-col items-center">
-            <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-black/35">{item.position.label}</p>
+            <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-black/52">{item.position.label}</p>
             <RevealCard
               card={item.card}
               position={item.position}
