@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
-import { getMessages, messages } from "@/lib/messages";
+import { getMessages } from "@/lib/messages";
 
 type Props = {
   locale: Locale;
